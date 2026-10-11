@@ -1,4 +1,4 @@
-package com.vinigabriel.portfolio_backend;
+package com.vinigabriel.portfolio;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

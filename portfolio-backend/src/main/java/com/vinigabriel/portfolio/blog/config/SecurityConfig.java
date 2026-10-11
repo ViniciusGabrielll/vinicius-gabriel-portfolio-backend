@@ -1,5 +1,6 @@
 package com.vinigabriel.portfolio.blog.config;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -50,16 +51,22 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder();
     }
 
+
     @Bean
-    public UserDetailsManager userDetailsManager(PasswordEncoder passwordEncoder) {
+    public UserDetailsManager userDetailsManager(
+            PasswordEncoder passwordEncoder,
+            @Value("${app.security.admin.username}") String adminUsername,
+            @Value("${app.security.admin.password}") String adminPassword
+    ) {
         UserDetails admin = User
-                .withUsername("admin")
-                .password(passwordEncoder.encode("123456"))
+                .withUsername(adminUsername)
+                .password(passwordEncoder.encode(adminPassword))
                 .roles("ADMIN")
                 .build();
 
         return new InMemoryUserDetailsManager(admin);
     }
+
 
     @Bean
     public AuthenticationManager authenticationManager(
