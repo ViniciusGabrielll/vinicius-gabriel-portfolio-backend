@@ -28,15 +28,20 @@ public class CloudinaryService {
         return result.get("secure_url").toString();
     }
 
+
     public String uploadFile(MultipartFile file) throws IOException {
         Map<?, ?> result = cloudinary.uploader().upload(
                 file.getBytes(),
                 Map.of(
                         "folder", "portfolio/articles/files",
-                        "resource_type", "raw"
+                        "resource_type", "raw",
+                        "use_filename", true,
+                        "unique_filename", true,
+                        "filename_override", file.getOriginalFilename()
                 )
         );
 
         return result.get("secure_url").toString();
     }
+
 }
